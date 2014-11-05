@@ -9,10 +9,9 @@ public interface LeitorEscritorRemoteInterface extends Remote{
 	 * para permitir que um cliente escreva no arquivo.
 	 * Deve tratar a concorrencia, verificando se não existe
 	 * nenhum outro cliente lendo ou escrevendo no arquivo.
-	 * @param texto texto a ser escrito no arquivo.
 	 * @throws RemoteException
 	 */
-	void escrever(String texto) throws RemoteException;
+	void escrever() throws RemoteException;
 	
 	/**
 	 * Método que deve ser implementado pelo servidor, 

@@ -12,7 +12,17 @@ import servidor.LeitorEscritorRemoteInterface;
  * @author Luiz Felipe
  *
  */
-public class Cliente {
+public abstract  class Cliente {
+	
+	int id;
+	public static int count =1;
+	
+	public Cliente(){
+		id = count;
+		count ++;
+	}
+	
+	public  abstract void executa();
 
 	/**
 	 * @param args
@@ -27,9 +37,7 @@ public class Cliente {
             Registry registry = LocateRegistry.getRegistry(args[0]);
             LeitorEscritorRemoteInterface sv = (LeitorEscritorRemoteInterface) registry.lookup(name);
             //chamada para escrita ou leitura no servidor
-            //sv.escrever(texto);
-            //sv.ler();
-            
+
             
         } catch (Exception e) {
             System.err.println("ComputePi exception:");
@@ -37,5 +45,6 @@ public class Cliente {
         }
 
 	}
+	
 
 }
