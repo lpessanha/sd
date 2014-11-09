@@ -1,13 +1,11 @@
 /**
  * 
  */
-package cliente;
-
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import servidor.LeitorEscritorRemoteInterface;
+
 
 /**
  * @author Luiz Felipe
@@ -27,9 +25,9 @@ public class Cliente implements Runnable {
 	
 	public void executa(LeitorEscritorRemoteInterface sv) throws RemoteException{
 		if(this.leitorOuEscritor == 1){
-			sv.escrever();
+			sv.escrever(id);
 		}else
-			sv.ler();
+			sv.ler(id);
 	}
 	
 
@@ -39,8 +37,8 @@ public class Cliente implements Runnable {
 	public static void main(String[] args) {
         Cliente c1 = new Cliente(1);
         Cliente c2 = new Cliente(2);
-        Cliente c3 = new Cliente(2);
-        Cliente c4 = new Cliente(1);
+        Cliente c3 = new Cliente(1);
+        Cliente c4 = new Cliente(2);
 
         Thread t1 = new Thread(c1);
         Thread t2 = new Thread(c2);
@@ -60,13 +58,17 @@ public class Cliente implements Runnable {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-            String name = "Compute";
+            String name = "Servidor";
             Registry registry = LocateRegistry.getRegistry();
+		System.out.println("Cliente "+id+" localizando servidor...");
             LeitorEscritorRemoteInterface sv = (LeitorEscritorRemoteInterface) registry.lookup(name);
+		System.out.println("Cliente "+id+" servidor localizado.");
+		System.out.println("Cliente "+id+" executando comando...");
             //chamada para escrita ou leitura no servidor
             executa(sv);
+		System.out.println("Cliente "+id+" execucao finalizada.");
         } catch (Exception e) {
-            System.err.println("ComputePi exception:");
+            System.err.println("exception:");
             e.printStackTrace();
         }
 	}
